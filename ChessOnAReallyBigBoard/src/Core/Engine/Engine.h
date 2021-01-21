@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Core/Singleton/Singleton.h"
+namespace sf
+{
+	class RenderWindow;
+}
 
 class Engine
 {
@@ -13,6 +16,7 @@ public:
 	void Shutdown();
 private:
 	class Game* m_Game = nullptr;
+	class sf::RenderWindow* m_RenderWindow;
 
 	bool m_ShouldShutdown = false;
 };

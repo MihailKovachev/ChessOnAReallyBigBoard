@@ -163,11 +163,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Board.cpp" />
+    <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="src\Core\Singleton\Singleton.cpp" />
     <ClCompile Include="src\Core\Engine\Engine.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\Board.h" />
+    <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Core\Singleton\Singleton.h" />
     <ClInclude Include="src\Core\Engine\Engine.h" />
   </ItemGroup>
