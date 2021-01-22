@@ -8,10 +8,7 @@ const sf::Color Board::LightSquareColor = { 219, 210, 180 };
 
 Board::Board(const sf::Vector2u& Size)
 {
-	SquareSize = Size.x < Size.y ? Size.x / Width : Size.y / Height;
-
-	m_Background.create(Width * SquareSize, Height * SquareSize);
-
+	Resize(Size);
 	GenerateBackground();
 }
 
@@ -20,6 +17,13 @@ void Board::Render(sf::RenderWindow& Window)
 	sf::Sprite BackgroundSprite;
 	BackgroundSprite.setTexture(m_Background.getTexture());
 	Window.draw(BackgroundSprite);
+}
+
+void Board::Resize(const sf::Vector2u& Size)
+{
+	SquareSize = Size.x < Size.y ? Size.x / Width : Size.y / Height;
+	m_Background.create(Width * (unsigned int)SquareSize, Height * (unsigned int)SquareSize);
+	GenerateBackground();
 }
 
 void Board::GenerateBackground()

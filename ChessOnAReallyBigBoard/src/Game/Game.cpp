@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#include "SFML/Graphics/RenderWindow.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 
 #include "Core/Engine/Engine.h"
 
@@ -31,4 +32,9 @@ void Game::Render()
 	m_Window.clear();
 	m_Board.Render(m_Window);
 	m_Window.display();
+}
+
+void Game::OnWindowResized(const sf::Event& Event)
+{
+	m_Board.Resize(sf::Vector2u(Event.size.width, Event.size.height));
 }

@@ -22,14 +22,7 @@ void Engine::Run()
 {
 	while (!m_ShouldShutdown)
 	{
-		sf::Event e;
-		while (m_RenderWindow->pollEvent(e))
-		{
-			if (e.type == sf::Event::Closed)
-			{
-				Shutdown();
-			}
-		}
+		PollEvents();
 		m_Game->Run();
 	}
 }
@@ -37,4 +30,26 @@ void Engine::Run()
 void Engine::Shutdown()
 {
 	m_ShouldShutdown = true;
+}
+
+void Engine::PollEvents()
+{
+	sf::Event Event;
+	while (m_RenderWindow->pollEvent(Event))
+	{
+		switch (Event.type)
+		{
+		case sf::Event::Closed:
+			Shutdown();
+			break;
+		case sf::Event::Resized:
+			OnWindowResized(Event);
+		}
+	}
+}
+
+void Engine::OnWindowResized(const sf::Event& Event)
+{
+	m_RenderWindow->setView(sf::View(sf::FloatRect(0, 0, Event.size.width, Event.size.height)));
+	m_Game->OnWindowResized(Event);
 }

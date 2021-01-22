@@ -14,6 +14,7 @@ public:
 	Board(const sf::Vector2u& Size);
 
 	void Render(sf::RenderWindow& Window);
+	void Resize(const sf::Vector2u& Size);
 private:
 	void GenerateBackground();
 private:
@@ -23,7 +24,7 @@ private:
 	static const sf::Color DarkSquareColor;
 	static const sf::Color LightSquareColor;
 
-	float SquareSize;
+	float SquareSize = 0.f;
 
 	sf::RenderTexture m_Background;
 };

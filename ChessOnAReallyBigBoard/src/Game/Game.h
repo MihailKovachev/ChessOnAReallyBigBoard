@@ -3,6 +3,7 @@
 namespace sf
 {
 	class RenderWindow;
+	class Event;
 }
 
 #include "Board.h"
@@ -14,6 +15,7 @@ public:
 
 	void Run();
 
+	void OnWindowResized(const class sf::Event& Event);
 private:
 	void Update(float DeltaTime);
 	void Render();
