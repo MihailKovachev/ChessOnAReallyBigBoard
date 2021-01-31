@@ -163,17 +163,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Pieces\Pawn.cpp" />
     <ClCompile Include="src\Game\Board.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="src\Core\Singleton\Singleton.cpp" />
     <ClCompile Include="src\Core\Engine\Engine.cpp" />
+    <ClCompile Include="src\Game\Pieces\Piece.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Core\Engine\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\Pieces\Pawn.h" />
     <ClInclude Include="src\Game\Board.h" />
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Core\Singleton\Singleton.h" />
     <ClInclude Include="src\Core\Engine\Engine.h" />
+    <ClInclude Include="src\Game\Pieces\Piece.h" />
+    <ClInclude Include="src\Core\Engine\TextureManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

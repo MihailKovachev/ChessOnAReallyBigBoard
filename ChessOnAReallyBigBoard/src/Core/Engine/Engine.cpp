@@ -4,17 +4,19 @@
 #include <SFML/Window/Event.hpp>
 
 #include "Game/Game.h"
+#include "TextureManager.h"
 
 Engine::Engine()
 {
 	m_RenderWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "Chess On A Really Big Board");
-
+	m_TextureManager = new TextureManager("resources/");
 	m_Game = new Game(this, *m_RenderWindow);
 }
 
 Engine::~Engine()
 {
 	delete m_Game;
+	delete m_TextureManager;
 	delete m_RenderWindow;
 }
 

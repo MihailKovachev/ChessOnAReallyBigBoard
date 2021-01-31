@@ -11,7 +11,7 @@ Game::Game(class Engine* NEngine, sf::RenderWindow& Window)
 	:
 	m_Engine(NEngine),
 	m_Window(Window),
-	m_Board(Window.getSize())
+	m_Board(Window.getSize(), *m_Engine)
 {
 }
 
