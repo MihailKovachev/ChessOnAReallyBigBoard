@@ -25,7 +25,7 @@ private:
 	struct Square
 	{
 		bool bHasPiece = false;
-		Piece* m_Piece = nullptr;
+		std::unique_ptr<Piece> m_Piece = nullptr;
 	};
 
 private:
