@@ -163,16 +163,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Pieces\Archbishop.cpp" />
+    <ClCompile Include="src\Game\Pieces\Bishop.cpp" />
+    <ClCompile Include="src\Game\Pieces\Champion.cpp" />
+    <ClCompile Include="src\Game\Pieces\Chancellor.cpp" />
+    <ClCompile Include="src\Game\Pieces\Fool.cpp" />
+    <ClCompile Include="src\Game\Pieces\King.cpp" />
+    <ClCompile Include="src\Game\Pieces\Knight.cpp" />
+    <ClCompile Include="src\Game\Pieces\Queen.cpp" />
+    <ClCompile Include="src\Game\Pieces\Rook.cpp" />
     <ClCompile Include="src\Game\Pieces\Pawn.cpp" />
     <ClCompile Include="src\Game\Board.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="src\Core\Singleton\Singleton.cpp" />
     <ClCompile Include="src\Core\Engine\Engine.cpp" />
     <ClCompile Include="src\Game\Pieces\Piece.cpp" />
+    <ClCompile Include="src\Game\Pieces\Rose.cpp" />
+    <ClCompile Include="src\Game\Pieces\Wizard.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Core\Engine\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\Pieces\Archbishop.h" />
+    <ClInclude Include="src\Game\Pieces\Bishop.h" />
+    <ClInclude Include="src\Game\Pieces\Champion.h" />
+    <ClInclude Include="src\Game\Pieces\Chancellor.h" />
+    <ClInclude Include="src\Game\Pieces\Fool.h" />
+    <ClInclude Include="src\Game\Pieces\King.h" />
+    <ClInclude Include="src\Game\Pieces\Knight.h" />
+    <ClInclude Include="src\Game\Pieces\Queen.h" />
+    <ClInclude Include="src\Game\Pieces\Rook.h" />
     <ClInclude Include="src\Game\Pieces\Pawn.h" />
     <ClInclude Include="src\Game\Board.h" />
     <ClInclude Include="src\Game\Game.h" />
@@ -180,6 +200,8 @@
     <ClInclude Include="src\Core\Engine\Engine.h" />
     <ClInclude Include="src\Game\Pieces\Piece.h" />
     <ClInclude Include="src\Core\Engine\TextureManager.h" />
+    <ClInclude Include="src\Game\Pieces\Rose.h" />
+    <ClInclude Include="src\Game\Pieces\Wizard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
