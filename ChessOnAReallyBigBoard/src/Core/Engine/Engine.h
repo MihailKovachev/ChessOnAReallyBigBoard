@@ -21,7 +21,7 @@ public:
 private:
 	void PollEvents();
 	void OnWindowResized(const class sf::Event& Event);
-
+	void OnMouseButtonClicked(const class sf::Event& Event);
 private:
 	class Game* m_Game = nullptr;
 	class sf::RenderWindow* m_RenderWindow = nullptr;

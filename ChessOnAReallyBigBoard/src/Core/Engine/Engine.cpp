@@ -46,6 +46,10 @@ void Engine::PollEvents()
 			break;
 		case sf::Event::Resized:
 			OnWindowResized(Event);
+			break;
+		case sf::Event::MouseButtonPressed:
+			OnMouseButtonClicked(Event);
+			break;
 		}
 	}
 }
@@ -54,4 +58,9 @@ void Engine::OnWindowResized(const sf::Event& Event)
 {
 	m_RenderWindow->setView(sf::View(sf::FloatRect(0, 0, Event.size.width, Event.size.height)));
 	m_Game->OnWindowResized(Event);
+}
+
+void Engine::OnMouseButtonClicked(const sf::Event& Event)
+{
+	m_Game->OnMouseButtonClicked(Event);
 }

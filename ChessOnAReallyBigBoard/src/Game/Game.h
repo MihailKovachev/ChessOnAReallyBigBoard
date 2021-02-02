@@ -16,6 +16,7 @@ public:
 	void Run();
 
 	void OnWindowResized(const class sf::Event& Event);
+	void OnMouseButtonClicked(const class sf::Event& Event);
 private:
 	void Update(float DeltaTime);
 	void Render();

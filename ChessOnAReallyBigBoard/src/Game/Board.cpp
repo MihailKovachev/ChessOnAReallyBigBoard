@@ -20,6 +20,7 @@
 
 const sf::Color Board::DarkSquareColor = { 84, 48, 7 };
 const sf::Color Board::LightSquareColor = { 219, 210, 180 };
+const sf::Color Board::HighlightColor = { 255, 253, 128 };
 
 Board::Board(const sf::Vector2u& Size, const class Engine& NEngine)
 	:
@@ -40,10 +41,23 @@ Board::Board(const sf::Vector2u& Size, const class Engine& NEngine)
 void Board::Render(sf::RenderWindow& Window)
 {
 	Window.draw(m_BackgroundSprite);
-	for (const Square& BoardSquare : m_BoardSquares)
+
+	for (uint32_t x = 0; x < Width; ++x)
 	{
-		if (BoardSquare.bHasPiece)
-			BoardSquare.m_Piece->Render(Window);
+		for (uint32_t y = 0; y < Height; ++y)
+		{
+			if (m_BoardSquares[y * Width + x].bHighlighted)
+			{
+				sf::RectangleShape SquareShape(sf::Vector2f(SquareSize, SquareSize));
+				SquareShape.setPosition(x * SquareSize, y * SquareSize);
+				SquareShape.setFillColor(HighlightColor);
+				Window.draw(SquareShape);
+			}
+			
+			if (m_BoardSquares[y * Width + x].bHasPiece)
+				m_BoardSquares[y * Width + x].m_Piece->Render(Window);
+
+		}
 	}
 }
 
@@ -54,10 +68,17 @@ void Board::Resize(const sf::Vector2u& Size)
 	float Scale = SquareSize / m_Engine.GetTextureManager().GetArchbishopTexture(EPieceColor::White).getSize().x;
 
 	for (Square& CurrentSquare : m_BoardSquares)
+	{
 		if (CurrentSquare.bHasPiece)
 			CurrentSquare.m_Piece->ScaleSprite(Scale);
+	}
 
 	GenerateBackground(Width * (unsigned int)SquareSize, Height * (unsigned int)SquareSize);
+}
+
+void Board::ToggleHighlight(uint8_t X, uint8_t Y)
+{
+	m_BoardSquares[Y * Width + X].bHighlighted = !m_BoardSquares[Y * Width + X].bHighlighted;
 }
 
 void Board::GenerateBackground(uint32_t SizeX, uint32_t SizeY)

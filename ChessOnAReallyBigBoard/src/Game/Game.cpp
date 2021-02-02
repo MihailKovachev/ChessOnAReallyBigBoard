@@ -38,3 +38,21 @@ void Game::OnWindowResized(const sf::Event& Event)
 {
 	m_Board.Resize(sf::Vector2u(Event.size.width, Event.size.height));
 }
+
+void Game::OnMouseButtonClicked(const sf::Event& Event)
+{
+	if (Event.mouseButton.button == sf::Mouse::Button::Left)
+	{
+		int32_t MouseX = Event.mouseButton.x;
+		int32_t MouseY = Event.mouseButton.y;
+
+		sf::Vector2u BoardPadding(m_Window.getSize() - m_Board.GetSize());
+
+		uint32_t BoardX = static_cast<uint32_t>(MouseX / m_Board.GetSquareSize());
+		uint32_t BoardY = static_cast<uint32_t>(MouseY / m_Board.GetSquareSize());
+
+		if (BoardX > Board::GetWidth() || BoardY > Board::GetHeight()) return;
+
+		m_Board.ToggleHighlight(BoardX, BoardY);
+	}
+}

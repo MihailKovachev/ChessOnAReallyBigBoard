@@ -18,6 +18,12 @@ public:
 
 	void Render(sf::RenderWindow& Window);
 	void Resize(const sf::Vector2u& Size);
+	void ToggleHighlight(uint8_t X, uint8_t Y);
+
+	sf::Vector2u GetSize() const { return sf::Vector2u(Width * SquareSize, Height * SquareSize); }
+	static uint8_t GetWidth() { return Width; }
+	static uint8_t GetHeight() { return Height; }
+	float GetSquareSize() const { return SquareSize; }
 private:
 	void GenerateBackground(uint32_t SizeX, uint32_t SizeY);
 	void SetupBoard();
@@ -26,6 +32,7 @@ private:
 	{
 		bool bHasPiece = false;
 		std::unique_ptr<Piece> m_Piece = nullptr;
+		bool bHighlighted = false;
 	};
 
 private:
@@ -34,6 +41,7 @@ private:
 
 	static const sf::Color DarkSquareColor;
 	static const sf::Color LightSquareColor;
+	static const sf::Color HighlightColor;
 
 	float SquareSize = 0.f;
 
