@@ -10,6 +10,7 @@ Rook::Rook(const sf::Texture& Texture, EPieceColor Color, uint8_t BoardX, uint8_
 {
 }
 
-void Rook::Move(const std::string& MoveNotation)
+bool Rook::Move(uint8_t NewX, uint8_t  NewY)
 {
+	return false;
 }

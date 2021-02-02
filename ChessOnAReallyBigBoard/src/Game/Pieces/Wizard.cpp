@@ -10,6 +10,7 @@ Wizard::Wizard(const sf::Texture& Texture, EPieceColor Color, uint8_t BoardX, ui
 {
 }
 
-void Wizard::Move(const std::string& MoveNotation)
+bool Wizard::Move(uint8_t NewX, uint8_t  NewY)
 {
+	return false;
 }

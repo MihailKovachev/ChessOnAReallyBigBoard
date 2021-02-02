@@ -28,7 +28,7 @@ Board::Board(const sf::Vector2u& Size, const class Engine& NEngine)
 {
 	SetupBoard();
 
-	SquareSize = Size.x < Size.y ? Size.x / Width : Size.y / Height;
+	SquareSize = Size.x < Size.y ? static_cast<uint8_t>(Size.x / Width) : static_cast<uint8_t>(Size.y / Height);
 	float PieceScale = SquareSize / m_Engine.GetTextureManager().GetArchbishopTexture(EPieceColor::White).getSize().x;
 
 	for (Square& CurrentSquare : m_BoardSquares)
@@ -64,7 +64,7 @@ void Board::Render(sf::RenderWindow& Window)
 void Board::Resize(const sf::Vector2u& Size)
 {
 	float OldSquareSize = SquareSize;
-	SquareSize = Size.x < Size.y ? Size.x / Width : Size.y / Height;
+	SquareSize = Size.x < Size.y ? static_cast<float>(Size.x / Width) : static_cast<float>(Size.y / Height);
 	float Scale = SquareSize / m_Engine.GetTextureManager().GetArchbishopTexture(EPieceColor::White).getSize().x;
 
 	for (Square& CurrentSquare : m_BoardSquares)
@@ -76,9 +76,34 @@ void Board::Resize(const sf::Vector2u& Size)
 	GenerateBackground(Width * (unsigned int)SquareSize, Height * (unsigned int)SquareSize);
 }
 
-void Board::ToggleHighlight(uint8_t X, uint8_t Y)
+void Board::OnSquareSelected(uint8_t X, uint8_t Y)
 {
-	m_BoardSquares[Y * Width + X].bHighlighted = !m_BoardSquares[Y * Width + X].bHighlighted;
+	if (X > Width || Y > Height) return; // is the square valid
+
+	Square& SelectedSquare = m_BoardSquares[Y * Width + X];
+
+	if (SelectedSquare.bHasPiece)
+		SelectedSquare.m_Piece->SetReadyToMove(true);
+
+	for (Square& CurrentSquare : m_BoardSquares)
+	{
+		CurrentSquare.bHighlighted = false;
+		if (CurrentSquare.bHasPiece && CurrentSquare.m_Piece->IsReadyToMove())
+		{
+			if (CurrentSquare.m_Piece->Move(X, Y)) // did the piece move?
+			{
+				SelectedSquare.m_Piece = std::move(CurrentSquare.m_Piece);
+				SelectedSquare.bHasPiece = true;
+				SelectedSquare.m_Piece->SetReadyToMove(false);
+				SelectedSquare.bHighlighted = false;
+
+				CurrentSquare.bHasPiece = false;
+			}
+		}
+	}
+
+	SelectedSquare.bHighlighted = true;
+
 }
 
 void Board::GenerateBackground(uint32_t SizeX, uint32_t SizeY)

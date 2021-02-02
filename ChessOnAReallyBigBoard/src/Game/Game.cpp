@@ -51,8 +51,6 @@ void Game::OnMouseButtonClicked(const sf::Event& Event)
 		uint32_t BoardX = static_cast<uint32_t>(MouseX / m_Board.GetSquareSize());
 		uint32_t BoardY = static_cast<uint32_t>(MouseY / m_Board.GetSquareSize());
 
-		if (BoardX > Board::GetWidth() || BoardY > Board::GetHeight()) return;
-
-		m_Board.ToggleHighlight(BoardX, BoardY);
+		m_Board.OnSquareSelected(BoardX, BoardY);
 	}
 }

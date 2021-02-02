@@ -10,6 +10,7 @@ Chancellor::Chancellor(const sf::Texture& Texture, EPieceColor Color, uint8_t Bo
 {
 }
 
-void Chancellor::Move(const std::string& MoveNotation)
+bool Chancellor::Move(uint8_t NewX, uint8_t  NewY)
 {
+	return false;
 }

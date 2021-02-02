@@ -10,6 +10,7 @@ King::King(const sf::Texture& Texture, EPieceColor Color, uint8_t BoardX, uint8_
 {
 }
 
-void King::Move(const std::string& MoveNotation)
+bool King::Move(uint8_t NewX, uint8_t  NewY)
 {
+	return false;
 }

@@ -18,9 +18,12 @@ public:
 
 	EPieceColor GetColor() const { return m_Color; }
 
-	virtual void Move(const std::string& MoveNotation) = 0;
+	virtual bool Move(uint8_t NewX, uint8_t NewY) = 0;
 	void Render(sf::RenderTarget& RenderTarget);
 	void ScaleSprite(const float Scale);
+
+	bool IsReadyToMove() const { return bReadyToMove; }
+	void SetReadyToMove(bool bReady) { bReadyToMove = bReady; }
 protected:
 	sf::Sprite m_Sprite;
 	EPieceColor m_Color = EPieceColor::White;
@@ -29,4 +32,6 @@ protected:
 	*/
 	uint8_t m_BoardX = 0;
 	uint8_t m_BoardY = 0;
+
+	bool bReadyToMove = false;
 };

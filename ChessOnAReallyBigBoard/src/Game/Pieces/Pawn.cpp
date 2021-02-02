@@ -10,6 +10,14 @@ Pawn::Pawn(const sf::Texture& Texture, EPieceColor Color, uint8_t BoardX, uint8_
 {
 }
 
-void Pawn::Move(const std::string& MoveNotation)
+bool Pawn::Move(uint8_t NewX, uint8_t  NewY)
 {
+	if (NewX == m_BoardX && NewY == m_BoardY)
+		return false;
+
+	m_BoardX = NewX;
+	m_BoardY = NewY;
+
+	SetReadyToMove(false);
+	return true;
 }

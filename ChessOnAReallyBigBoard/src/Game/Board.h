@@ -18,9 +18,9 @@ public:
 
 	void Render(sf::RenderWindow& Window);
 	void Resize(const sf::Vector2u& Size);
-	void ToggleHighlight(uint8_t X, uint8_t Y);
+	void OnSquareSelected(uint8_t X, uint8_t Y);
 
-	sf::Vector2u GetSize() const { return sf::Vector2u(Width * SquareSize, Height * SquareSize); }
+	sf::Vector2u GetSize() const { return sf::Vector2u(unsigned int(Width * SquareSize), unsigned int(Height * SquareSize)); }
 	static uint8_t GetWidth() { return Width; }
 	static uint8_t GetHeight() { return Height; }
 	float GetSquareSize() const { return SquareSize; }
@@ -32,6 +32,7 @@ private:
 	{
 		bool bHasPiece = false;
 		std::unique_ptr<Piece> m_Piece = nullptr;
+
 		bool bHighlighted = false;
 	};
 
@@ -46,6 +47,8 @@ private:
 	float SquareSize = 0.f;
 
 	std::array<Square, Width * Height> m_BoardSquares;
+
+	EPieceColor PlayerToPlay = EPieceColor::White;
 
 	sf::RenderTexture m_BackgroundTexture;
 	sf::Sprite m_BackgroundSprite;

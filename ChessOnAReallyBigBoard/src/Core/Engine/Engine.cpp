@@ -56,7 +56,7 @@ void Engine::PollEvents()
 
 void Engine::OnWindowResized(const sf::Event& Event)
 {
-	m_RenderWindow->setView(sf::View(sf::FloatRect(0, 0, Event.size.width, Event.size.height)));
+	m_RenderWindow->setView(sf::View(sf::FloatRect(0.f, 0.f, Event.size.width, Event.size.height)));
 	m_Game->OnWindowResized(Event);
 }
 

@@ -10,6 +10,7 @@ Bishop::Bishop(const sf::Texture& Texture, EPieceColor Color, uint8_t BoardX, ui
 {
 }
 
-void Bishop::Move(const std::string& MoveNotation)
+bool Bishop::Move(uint8_t NewX, uint8_t  NewY)
 {
+	return false;
 }
