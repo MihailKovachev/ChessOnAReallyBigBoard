@@ -1,12 +1,12 @@
 #include "King.h"
 
-King::King(const sf::Sprite& Sprite, EPieceColor Color, uint8_t BoardX, uint8_t BoardY)
-	: Piece(Sprite, Color, BoardX, BoardY)
+King::King(const sf::Sprite& Sprite, EPieceColor Color, Board& nBoard, uint8_t BoardX, uint8_t BoardY)
+	: Piece(Sprite, Color, nBoard, BoardX, BoardY)
 {
 }
 
-King::King(const sf::Texture& Texture, EPieceColor Color, uint8_t BoardX, uint8_t BoardY)
-	: Piece(Texture, Color, BoardX, BoardY)
+King::King(const sf::Texture& Texture, EPieceColor Color, Board& nBoard, uint8_t BoardX, uint8_t BoardY)
+	: Piece(Texture, Color, nBoard, BoardX, BoardY)
 {
 }
 

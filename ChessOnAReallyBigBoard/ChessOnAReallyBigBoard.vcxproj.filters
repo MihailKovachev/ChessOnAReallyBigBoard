@@ -128,5 +128,8 @@
     <ClInclude Include="src\Game\Pieces\Chancellor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game\Pieces\PieceColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

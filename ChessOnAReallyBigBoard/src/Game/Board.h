@@ -24,9 +24,15 @@ public:
 	static uint8_t GetWidth() { return Width; }
 	static uint8_t GetHeight() { return Height; }
 	float GetSquareSize() const { return SquareSize; }
+
+	bool HasPieceAt(uint8_t X, uint8_t Y) const;
+	const std::unique_ptr<Piece>& GetPiece(uint8_t X, uint8_t Y) const;
+	bool GetPieceColor(uint8_t X, uint8_t Y, EPieceColor& OutColor) const;
+	static bool IsWithinBoard(uint8_t X, uint8_t Y);
 private:
 	void GenerateBackground(uint32_t SizeX, uint32_t SizeY);
 	void SetupBoard();
+
 private:
 	struct Square
 	{

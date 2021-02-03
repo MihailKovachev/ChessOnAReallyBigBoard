@@ -2,19 +2,23 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-Piece::Piece(const sf::Sprite& Sprite, EPieceColor Color, uint8_t BoardX, uint8_t BoardY)
+#include "Game/Board.h"
+
+Piece::Piece(const sf::Sprite& Sprite, EPieceColor Color, Board& nBoard, uint8_t BoardX, uint8_t BoardY)
 	: 
 	m_Sprite(Sprite),
 	m_Color(Color),
+	m_Board(nBoard),
 	m_BoardX(BoardX),
 	m_BoardY(BoardY)
 {
 }
 
-Piece::Piece(const sf::Texture& Texture, EPieceColor Color, uint8_t BoardX, uint8_t BoardY)
+Piece::Piece(const sf::Texture& Texture, EPieceColor Color, Board& nBoard, uint8_t BoardX, uint8_t BoardY)
 	: 
 	m_Sprite(Texture),
 	m_Color(Color),
+	m_Board(nBoard),
 	m_BoardX(BoardX),
 	m_BoardY(BoardY)
 {
