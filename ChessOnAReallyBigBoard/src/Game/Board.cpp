@@ -78,12 +78,9 @@ void Board::Resize(const sf::Vector2u& Size)
 
 void Board::OnSquareSelected(uint8_t X, uint8_t Y)
 {
-	if (X > Width || Y > Height) return; // is the square valid
+	if (!IsWithinBoard(X, Y)) return; // is the square valid
 
 	Square& SelectedSquare = m_BoardSquares[Y * Width + X];
-
-	if (SelectedSquare.bHasPiece)
-		SelectedSquare.m_Piece->SetReadyToMove(true);
 
 	for (Square& CurrentSquare : m_BoardSquares)
 	{
@@ -101,6 +98,9 @@ void Board::OnSquareSelected(uint8_t X, uint8_t Y)
 			}
 		}
 	}
+
+	if (SelectedSquare.bHasPiece)
+		SelectedSquare.m_Piece->SetReadyToMove(true);
 
 	SelectedSquare.bHighlighted = true;
 

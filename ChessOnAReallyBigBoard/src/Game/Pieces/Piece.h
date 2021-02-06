@@ -26,7 +26,17 @@ public:
 	void SetReadyToMove(bool bReady) { bReadyToMove = bReady; }
 
 protected:
+	/** The sign represents the direction of the coordinate relative to the piece.
+	* -x +y left up diagonal
+	* +x +y right up diagonal
+	* +x -y right down diagonal
+	* -x -y left down diagonal
 
+	
+	*/
+	virtual bool IsBlockedOnDiagonal(int8_t DiagonalX, int8_t DiagonalY, std::array<sf::Vector2u, 2>& BlockingSquares);
+	virtual bool IsBlockedOnFile(std::array<sf::Vector2u, 2>& BlockingSquares);
+	virtual bool IsBlockedOnRow(std::array<sf::Vector2u, 2>& BlockingSquares);
 protected:
 	sf::Sprite m_Sprite;
 	EPieceColor m_Color = EPieceColor::White;

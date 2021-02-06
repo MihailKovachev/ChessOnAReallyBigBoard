@@ -36,3 +36,18 @@ void Piece::ScaleSprite(const float Scale)
 {
 	m_Sprite.setScale(Scale, Scale);
 }
+
+bool Piece::IsBlockedOnDiagonal(int8_t DiagonalX, int8_t DiagonalY, std::array<sf::Vector2u, 2>& BlockingSquares)
+{
+	return false;
+}
+
+bool Piece::IsBlockedOnFile(std::array<sf::Vector2u, 2>& BlockingSquares)
+{
+	return false;
+}
+
+bool Piece::IsBlockedOnRow(std::array<sf::Vector2u, 2>& BlockingSquares)
+{
+	return false;
+}

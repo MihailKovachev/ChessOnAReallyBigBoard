@@ -14,3 +14,8 @@ bool Archbishop::Move(uint8_t NewX, uint8_t  NewY)
 {
 	return false;
 }
+
+//bool Archbishop::IsBlockedOnDiagonal(int8_t DiagonalX, int8_t DiagonalY)
+//{
+//	return false;
+//}

@@ -14,3 +14,13 @@ bool Chancellor::Move(uint8_t NewX, uint8_t  NewY)
 {
 	return false;
 }
+
+bool Chancellor::IsBlockedOnFile(std::array<sf::Vector2u, 2>& BlockingSquares)
+{
+	return false;
+}
+
+bool Chancellor::IsBlockedOnRow(std::array<sf::Vector2u, 2>& BlockingSquares)
+{
+	return false;
+}

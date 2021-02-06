@@ -14,3 +14,18 @@ bool Queen::Move(uint8_t NewX, uint8_t  NewY)
 {
 	return false;
 }
+
+//bool Queen::IsBlockedOnDiagonal(int8_t DiagonalX, int8_t DiagonalY)
+//{
+//	return false;
+//}
+
+bool Queen::IsBlockedOnFile(std::array<sf::Vector2u, 2>& BlockingSquares)
+{
+	return false;
+}
+
+bool Queen::IsBlockedOnRow(std::array<sf::Vector2u, 2>& BlockingSquares)
+{
+	return false;
+}

@@ -16,6 +16,11 @@ public:
 	void Run();
 	void Shutdown();
 
+	template <typename T> 
+	static int SignOf(T val) {
+		return (T(0) < val) - (val < T(0));
+	}
+
 	class TextureManager& GetTextureManager() { return *m_TextureManager; }
 	const class TextureManager& GetTextureManager() const { return *m_TextureManager; }
 private:
