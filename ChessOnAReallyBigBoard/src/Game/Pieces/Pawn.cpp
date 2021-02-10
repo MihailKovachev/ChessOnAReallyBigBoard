@@ -33,6 +33,14 @@ bool Pawn::Move(uint8_t NewX, uint8_t  NewY)
 	{
 		bCanCapture = NewY == m_BoardY + Direction
 			&& m_Board.GetPieceColor(NewX, NewY, CapturedPieceColor) && CapturedPieceColor != m_Color;
+		if (bCanCapture)
+		{
+			m_BoardX = NewX;
+			m_BoardY = NewY;
+			bHasMoved = true;
+			SetReadyToMove(false);
+			return true;
+		}
 	}
 
 	std::array<sf::Vector2u, 2> BlockingSquares;
@@ -132,7 +140,7 @@ bool Pawn::IsBlockedOnFile(std::array<sf::Vector2u, 2>& BlockingSquares)
 		
 		for (uint8_t y = 1; y <= 6; ++y)
 		{
-			if (m_Board.HasPieceAt(m_BoardX, m_BoardY + Direction * y) && y != m_BoardY)
+			if (m_Board.HasPieceAt(m_BoardX, m_BoardY + Direction * y))
 			{
 				BlockingSquares[NumBlockingSquares++] = sf::Vector2u(m_BoardX, m_BoardY + Direction * y);
 				if (NumBlockingSquares == 2)
