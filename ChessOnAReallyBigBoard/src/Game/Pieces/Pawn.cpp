@@ -89,12 +89,12 @@ bool Pawn::Move(uint8_t NewX, uint8_t  NewY)
 bool Pawn::IsBlockedOnDiagonal(int8_t DiagonalX, int8_t DiagonalY, std::array<sf::Vector2u, 2>& BlockingSquares)
 {
 	uint8_t NumberOfBlockingPieces = 0;
-	if(m_Board.HasPieceAt(m_BoardX + 1, m_BoardY + Direction))
+	if(Board::IsWithinBoard(m_BoardX + 1, m_BoardY) && m_Board.HasPieceAt(m_BoardX + 1, m_BoardY + Direction))
 	{
 		BlockingSquares[0] = sf::Vector2u(m_BoardX + 1, m_BoardY + Direction);
 		++NumberOfBlockingPieces;
 	}
-	if (m_Board.HasPieceAt(m_BoardX - 1, m_BoardY + Direction))
+	if (Board::IsWithinBoard(m_BoardX - 1, m_BoardY + Direction) && m_Board.HasPieceAt(m_BoardX - 1, m_BoardY + Direction))
 	{
 		BlockingSquares[1] = sf::Vector2u(m_BoardX - 1, m_BoardY + Direction);
 		++NumberOfBlockingPieces;

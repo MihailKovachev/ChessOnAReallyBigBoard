@@ -1,6 +1,7 @@
 #include "Rook.h"
 
 #include "Game/Board.h"
+#include "Core/Engine/Engine.h"
 
 Rook::Rook(const sf::Sprite& Sprite, EPieceColor Color, Board& nBoard, uint8_t BoardX, uint8_t BoardY)
 	: Piece(Sprite, Color, nBoard, BoardX, BoardY)
@@ -14,111 +15,187 @@ Rook::Rook(const sf::Texture& Texture, EPieceColor Color, Board& nBoard, uint8_t
 
 bool Rook::Move(uint8_t NewX, uint8_t  NewY)
 {
-	if (NewX == m_BoardX && NewY == m_BoardY || !Board::IsWithinBoard(NewX, NewY))
+	if ((NewX == m_BoardX && NewY == m_BoardY) || !Board::IsWithinBoard(NewX, NewY)
+		|| (NewX != m_BoardX && NewY != m_BoardY))
 		return false;
 
-	std::array<sf::Vector2u, 2> BlockingFileSquares;
-	if (IsBlockedOnFile(BlockingFileSquares))
+	int8_t DirectionX = Engine::SignOf(NewX - m_BoardX);
+	int8_t DirectionY = Engine::SignOf(NewY - m_BoardY);
+
+	EPieceColor CapturedPieceColor;
+	// Ensure we don't capture a piece of the same color
+	if (m_Board.GetPieceColor(NewX, NewY, CapturedPieceColor) && CapturedPieceColor == m_Color)
+		return false;
+
+	std::array<sf::Vector2u, 2> ObstructedSquares;
+
+	if (NewY != m_BoardY && IsBlockedOnFile(ObstructedSquares))
 	{
-		EPieceColor Color;
-		if ((NewY == BlockingFileSquares[0].y || NewY == BlockingFileSquares[1].y)
-			&& m_Board.GetPieceColor(NewX, NewY, Color) && Color != m_Color)
+		uint8_t DistanceToNewY = (uint8_t)std::abs(m_BoardY - NewY);
+
+		// We need to perserve direction information, which is why we need the sign of the value, too.
+		int8_t DistanceToFirstObstructedSquare = ObstructedSquares[0].y - m_BoardY;
+		int8_t DistanceToSecondObstructedSquare = ObstructedSquares[1].y - m_BoardY;
+
+		EPieceColor FirstObstructingPieceColor;
+		m_Board.GetPieceColor(ObstructedSquares[0].x, ObstructedSquares[0].y, FirstObstructingPieceColor);
+		EPieceColor SecondObstructingPieceColor;
+		m_Board.GetPieceColor(ObstructedSquares[1].x, ObstructedSquares[1].y, SecondObstructingPieceColor);
+
+
+		if (DirectionY == Engine::SignOf(DistanceToFirstObstructedSquare))
 		{
-			m_BoardX = NewX;
-			m_BoardY = NewY;
-			return true;
+			if ((DistanceToNewY <= std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor != m_Color)
+				|| (DistanceToNewY < std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor == m_Color))
+			{
+				m_BoardY = NewY;
+				SetReadyToMove(false);
+				return true;
+			}
+			else
+			{
+				SetReadyToMove(false);
+				return false;
+			}
 		}
-		else if (NewY < m_BoardY && (NewY < BlockingFileSquares[0].y || NewY < BlockingFileSquares[1].y))
+		else if (DirectionY == Engine::SignOf(DistanceToSecondObstructedSquare))
 		{
-			return false;
-		}
-		else if (NewY > m_BoardY && (NewY > BlockingFileSquares[0].y || NewY > BlockingFileSquares[1].y))
-		{
-			return false;
+			if ((DistanceToNewY <= std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor != m_Color)
+				|| (DistanceToNewY < std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor == m_Color))
+			{
+				m_BoardY = NewY;
+				SetReadyToMove(false);
+				return true;
+			}
+			else
+			{
+				SetReadyToMove(false);
+				return false;
+			}
+
 		}
 		else
 		{
-			m_BoardX = NewX;
-			m_BoardY = NewY;
-			return true;
+			SetReadyToMove(false);
+			return false;
 		}
 	}
-
-	std::array<sf::Vector2u, 2> BlockingSquares;
-	if (IsBlockedOnRow(BlockingSquares))
+	
+	if (NewX != m_BoardX && IsBlockedOnRow(ObstructedSquares))
 	{
-		if (NewX == BlockingSquares[0].x || NewY == BlockingSquares[1].x)
+		uint8_t DistanceToNewX = (uint8_t)std::abs(m_BoardX - NewX);
+
+		// We need to perserve direction information, which is whx we need the sign of the value, too.
+		int8_t DistanceToFirstObstructedSquare = ObstructedSquares[0].x - m_BoardX;
+		int8_t DistanceToSecondObstructedSquare = ObstructedSquares[1].x - m_BoardX;
+
+		EPieceColor FirstObstructingPieceColor;
+		m_Board.GetPieceColor(ObstructedSquares[0].x, ObstructedSquares[0].y, FirstObstructingPieceColor);
+		EPieceColor SecondObstructingPieceColor;
+		m_Board.GetPieceColor(ObstructedSquares[1].x, ObstructedSquares[1].y, SecondObstructingPieceColor);
+
+		if (DirectionX == Engine::SignOf(DistanceToFirstObstructedSquare))
 		{
-			m_BoardX = NewX;
-			m_BoardY = NewY;
-			return true;
+			if ((DistanceToNewX <= std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor != m_Color)
+				|| (DistanceToNewX < std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor == m_Color))
+			{
+				m_BoardX = NewX;
+				SetReadyToMove(false);
+				return true;
+			}
+			else
+			{ 
+				SetReadyToMove(false);
+				return false;
+			}
 		}
-		else if (NewX < m_BoardX && (NewX < BlockingSquares[0].x || NewX < BlockingSquares[1].x))
+		else if (DirectionX == Engine::SignOf(DistanceToSecondObstructedSquare))
 		{
-			return false;
-		}
-		else if (NewX > m_BoardX && (NewX > BlockingSquares[0].x || NewX > BlockingSquares[1].x))
-		{
-			return false;
+			if ((DistanceToNewX <= std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor != m_Color)
+				|| (DistanceToNewX < std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor == m_Color))
+			{
+				m_BoardX = NewX;
+				SetReadyToMove(false);
+				return true;
+			}
+			else
+			{
+				SetReadyToMove(false);
+				return false;
+			}
 		}
 		else
 		{
-			m_BoardX = NewX;
-			m_BoardY = NewY;
-			return true;
+			SetReadyToMove(false);
+			return false;
 		}
 	}
-	EPieceColor Color;
-	if (m_Board.GetPieceColor(NewX, NewY, Color) && Color != m_Color)
-	{
-		m_BoardX = NewX;
-		m_BoardY = NewY;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+
+	m_BoardX = NewX;
+	m_BoardY = NewY;
+	SetReadyToMove(false);
+	return true;
 }
 
-bool Rook::IsBlockedOnFile(std::array<sf::Vector2u, 2>& BlockingSquares)
+bool Rook::IsBlockedOnFile(std::array<sf::Vector2u, 2>& ObstructedSquares)
 {
-	uint8_t NumBlockingSquares = 0;
-	for (uint8_t y = 0; y < Board::GetHeight(); ++y)
+	ObstructedSquares.fill(sf::Vector2u());
+
+	uint8_t NumberOfObstructedSquares = 0;
+
+	for (int8_t y = m_BoardY - 1; y > 0; --y)
 	{
-		if (m_Board.HasPieceAt(m_BoardX, y) && y != m_BoardY)
+		if (m_Board.HasPieceAt(m_BoardX, y))
 		{
-			BlockingSquares[NumBlockingSquares++] = sf::Vector2u(m_BoardX, y);
-			if (NumBlockingSquares == 2)
-				return true;
+			ObstructedSquares[NumberOfObstructedSquares].x = m_BoardX;
+			ObstructedSquares[NumberOfObstructedSquares].y = y;
+			++NumberOfObstructedSquares;
+			break;
 		}
 	}
 
-	if (NumBlockingSquares > 0)
+	for (int8_t y = m_BoardY + 1; y < Board::GetHeight(); ++y)
 	{
-		return true;
+		if (m_Board.HasPieceAt(m_BoardX, y))
+		{
+			ObstructedSquares[NumberOfObstructedSquares].x = m_BoardX;
+			ObstructedSquares[NumberOfObstructedSquares].y = y;
+			++NumberOfObstructedSquares;
+			break;
+		}
 	}
 
-	return false;
+	return NumberOfObstructedSquares > 0;
 }
 
-bool Rook::IsBlockedOnRow(std::array<sf::Vector2u, 2>& BlockingSquares)
+bool Rook::IsBlockedOnRow(std::array<sf::Vector2u, 2>& ObstructedSquares)
 {
-	uint8_t NumBlockingSquares = 0;
-	for (uint8_t x = 0; x < Board::GetWidth(); ++x)
+	ObstructedSquares.fill(sf::Vector2u());
+
+	uint8_t NumberOfObstructedSquares = 0;
+
+	for (int8_t x = m_BoardX - 1; x > 0; --x)
 	{
-		if (m_Board.HasPieceAt(x, m_BoardY) && x != m_BoardX)
+		if (m_Board.HasPieceAt(x, m_BoardY))
 		{
-			BlockingSquares[NumBlockingSquares++] = sf::Vector2u(x, m_BoardY);
-			if (NumBlockingSquares == 2)
-				return true;
+			ObstructedSquares[NumberOfObstructedSquares].x = x;
+			ObstructedSquares[NumberOfObstructedSquares].y = m_BoardY;
+			++NumberOfObstructedSquares;
+			break;
 		}
 	}
 
-	if (NumBlockingSquares > 0)
+	for (int8_t x = m_BoardX + 1; x < Board::GetWidth(); ++x)
 	{
-		return true;
+		if (m_Board.HasPieceAt(x, m_BoardY))
+		{
+			ObstructedSquares[NumberOfObstructedSquares].x = x;
+			ObstructedSquares[NumberOfObstructedSquares].y = m_BoardY;
+			++NumberOfObstructedSquares;
+			break;
+		}
 	}
 
-	return false;
+	return NumberOfObstructedSquares > 0;
+
 }
