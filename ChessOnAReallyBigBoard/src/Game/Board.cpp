@@ -87,6 +87,7 @@ void Board::OnSquareSelected(uint8_t X, uint8_t Y)
 		CurrentSquare.bHighlighted = false;
 		if (CurrentSquare.bHasPiece && CurrentSquare.m_Piece->IsReadyToMove())
 		{
+			CurrentSquare.m_Piece->SetReadyToMove(false);
 			if (CurrentSquare.m_Piece->Move(X, Y)) // did the piece move?
 			{
 				SelectedSquare.m_Piece = std::move(CurrentSquare.m_Piece);
