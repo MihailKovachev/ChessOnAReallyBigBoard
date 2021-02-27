@@ -127,7 +127,7 @@ bool Board::GetPieceColor(uint8_t X, uint8_t Y, EPieceColor& OutColor) const
 	return false;
 }
 
-bool Board::IsWithinBoard(uint8_t X, uint8_t Y)
+bool Board::IsWithinBoard(int8_t X, int8_t Y)
 {
 	return X < Width && X >= 0 && Y < Height && Y >= 0;
 }
