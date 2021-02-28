@@ -45,7 +45,7 @@ bool Queen::Move(uint8_t NewX, uint8_t  NewY)
 			return false;
 		}
 	}
-	else
+	else if (std::abs(NewX - m_BoardX) == std::abs(NewY - m_BoardY))
 	{
 		m_BoardX = NewX;
 		m_BoardY = NewY;
@@ -114,6 +114,12 @@ bool Queen::Move(uint8_t NewX, uint8_t  NewY)
 			return false;
 		}
 	}
+	else if (NewY != m_BoardY)
+	{
+		m_BoardY = NewY;
+		SetReadyToMove(false);
+		return true;
+	}
 
 	if (NewX != m_BoardX && IsBlockedOnRow(ObstructedSquares))
 	{
@@ -163,6 +169,12 @@ bool Queen::Move(uint8_t NewX, uint8_t  NewY)
 			SetReadyToMove(false);
 			return false;
 		}
+	}
+	else if (NewX != m_BoardX)
+	{
+		m_BoardX = NewX;
+		SetReadyToMove(false);
+		return true;
 	}
 	return false;
 }
