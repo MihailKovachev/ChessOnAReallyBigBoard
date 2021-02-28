@@ -76,8 +76,9 @@ bool Rook::Move(uint8_t NewX, uint8_t  NewY)
 		}
 		else
 		{
+			m_BoardY = NewY;
 			SetReadyToMove(false);
-			return false;
+			return true;
 		}
 	}
 	
