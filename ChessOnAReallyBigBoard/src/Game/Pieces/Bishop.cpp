@@ -15,7 +15,8 @@ Bishop::Bishop(const sf::Texture& Texture, EPieceColor Color, Board& nBoard, uin
 
 bool Bishop::Move(uint8_t NewX, uint8_t  NewY)
 {
-	if (std::abs(NewX - m_BoardX) != std::abs(NewY - m_BoardY) || (NewX == m_BoardX && NewY == m_BoardY))
+	if (!Board::IsWithinBoard(NewX, NewY) 
+		|| std::abs(NewX - m_BoardX) != std::abs(NewY - m_BoardY) || (NewX == m_BoardX && NewY == m_BoardY))
 		return false;
 
 	int8_t DiagonalX = Engine::SignOf(NewX - m_BoardX);
