@@ -58,13 +58,7 @@ bool Archbishop::Move(uint8_t NewX, uint8_t  NewY)
 		SetReadyToMove(false);
 		return true;
 	}
-	//else if (bKnightMove)
-	//{
-	//	m_BoardX = NewX;
-	//	m_BoardY = NewY;
-	//	SetReadyToMove(false);
-	//	return true;
-	//}
+
 
 	SetReadyToMove(false);
 	return false;
