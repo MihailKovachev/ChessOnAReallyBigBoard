@@ -37,12 +37,10 @@ bool Bishop::Move(uint8_t NewX, uint8_t  NewY)
 		{
 			m_BoardX = NewX;
 			m_BoardY = NewY;
-			SetReadyToMove(false);
 			return true;
 		}
 		else
 		{
-			SetReadyToMove(false);
 			return false;
 		}
 	}
@@ -50,11 +48,9 @@ bool Bishop::Move(uint8_t NewX, uint8_t  NewY)
 	{
 		m_BoardX = NewX;
 		m_BoardY = NewY;
-		SetReadyToMove(false);
 		return true;
 	}
 
-	SetReadyToMove(false);
 	return false;
 }
 

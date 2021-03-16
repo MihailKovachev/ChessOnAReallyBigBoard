@@ -22,14 +22,8 @@ bool King::Move(uint8_t NewX, uint8_t  NewY)
 		) return false;
 
 	EPieceColor CapturedPieceColor;
-	if (m_Board.HasPieceAt(NewX, NewY) && m_Board.GetPieceColor(NewX, NewY, CapturedPieceColor) && CapturedPieceColor != m_Color)
-	{
-		m_BoardX = NewX;
-		m_BoardY = NewY;
-		bHasMoved = true;
-		return true;
-	}
-	else if (!m_Board.HasPieceAt(NewX, NewY))
+	if (m_Board.HasPieceAt(NewX, NewY) && m_Board.GetPieceColor(NewX, NewY, CapturedPieceColor) && CapturedPieceColor != m_Color
+		|| !m_Board.HasPieceAt(NewX, NewY))
 	{
 		m_BoardX = NewX;
 		m_BoardY = NewY;
