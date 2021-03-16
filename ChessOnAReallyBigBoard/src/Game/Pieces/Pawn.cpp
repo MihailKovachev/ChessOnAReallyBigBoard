@@ -17,15 +17,10 @@ Pawn::Pawn(const sf::Texture& Texture, EPieceColor Color, Board& nBoard, uint8_t
 
 bool Pawn::Move(uint8_t NewX, uint8_t  NewY)
 {
-	int8_t Direction = m_Color == EPieceColor::Black ? +1 : -1;
 	if ((NewX == m_BoardX && NewY == m_BoardY) || !Board::IsWithinBoard(NewX, NewY)
 		||
-		Engine::SignOf(NewY - m_BoardY) != Engine::SignOf(Direction)
-		)
-	{
-		SetReadyToMove(false);
+		Engine::SignOf(NewY - m_BoardY) != Direction)
 		return false;
-	}
 
 	std::array<sf::Vector2u, 2> BlockingSquares;
 
@@ -36,7 +31,6 @@ bool Pawn::Move(uint8_t NewX, uint8_t  NewY)
 			|| (NewX == BlockingSquares[1].x && NewY == BlockingSquares[1].y)) && 
 		m_Board.GetPieceColor(NewX, NewY, CapturedPieceColor) && CapturedPieceColor != m_Color)
 	{
-		SetReadyToMove(false);
 		m_BoardX = NewX;
 		m_BoardY = NewY;
 		bHasMoved = true;
@@ -52,7 +46,6 @@ bool Pawn::Move(uint8_t NewX, uint8_t  NewY)
 		m_BoardX = NewX;
 		m_BoardY = NewY;
 		bHasMoved = true;
-		SetReadyToMove(false);
 		return true;
 	}
 	else if (!bBlockedOnFile)
@@ -62,13 +55,7 @@ bool Pawn::Move(uint8_t NewX, uint8_t  NewY)
 			if (NewY == m_BoardY + Direction && NewX == m_BoardX)
 			{
 				m_BoardY = NewY;
-				SetReadyToMove(false);
 				return true;
-			}
-			else
-			{
-				SetReadyToMove(false);
-				return false;
 			}
 		}
 		else
@@ -82,22 +69,20 @@ bool Pawn::Move(uint8_t NewX, uint8_t  NewY)
 		}
 	}
 	
-	SetReadyToMove(false);
 	return false;
 }
 
 bool Pawn::IsBlockedOnDiagonal(int8_t DiagonalX, int8_t DiagonalY, std::array<sf::Vector2u, 2>& BlockingSquares)
 {
 	uint8_t NumberOfBlockingPieces = 0;
-	if(Board::IsWithinBoard(m_BoardX + 1, m_BoardY) && m_Board.HasPieceAt(m_BoardX + 1, m_BoardY + Direction))
+	if(Board::IsWithinBoard(m_BoardX + 1, m_BoardY + Direction) && m_Board.HasPieceAt(m_BoardX + 1, m_BoardY + Direction))
 	{
-		BlockingSquares[0] = sf::Vector2u(m_BoardX + 1, m_BoardY + Direction);
-		++NumberOfBlockingPieces;
+		BlockingSquares[NumberOfBlockingPieces++] = sf::Vector2u(m_BoardX + 1, m_BoardY + Direction);
+		
 	}
 	if (Board::IsWithinBoard(m_BoardX - 1, m_BoardY + Direction) && m_Board.HasPieceAt(m_BoardX - 1, m_BoardY + Direction))
 	{
-		BlockingSquares[1] = sf::Vector2u(m_BoardX - 1, m_BoardY + Direction);
-		++NumberOfBlockingPieces;
+		BlockingSquares[NumberOfBlockingPieces++] = sf::Vector2u(m_BoardX - 1, m_BoardY + Direction);
 	}
 	return NumberOfBlockingPieces > 0;
 }
