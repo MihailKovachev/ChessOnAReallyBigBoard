@@ -163,6 +163,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Engine\Components\Component.cpp" />
+    <ClCompile Include="src\Core\Engine\GameObject.cpp" />
     <ClCompile Include="src\Game\Pieces\Archbishop.cpp" />
     <ClCompile Include="src\Game\Pieces\Bishop.cpp" />
     <ClCompile Include="src\Game\Pieces\Champion.cpp" />
@@ -184,6 +186,9 @@
     <ClCompile Include="src\Core\Engine\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Engine\Components\Component.h" />
+    <ClInclude Include="src\Core\Engine\Components\ComponentTypes.h" />
+    <ClInclude Include="src\Core\Engine\GameObject.h" />
     <ClInclude Include="src\Game\Pieces\Archbishop.h" />
     <ClInclude Include="src\Game\Pieces\Bishop.h" />
     <ClInclude Include="src\Game\Pieces\Champion.h" />

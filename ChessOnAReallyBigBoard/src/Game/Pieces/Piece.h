@@ -3,6 +3,7 @@
 #include <string>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <Core/Engine/GameObject.h>
 
 enum class EPieceColor
 {
@@ -10,13 +11,14 @@ enum class EPieceColor
 	White
 };
 
-class Piece
+class Piece : public GameObject
 {
 public:
 	Piece(const sf::Sprite& Sprite, EPieceColor Color, class Board& nBoard, uint8_t BoardX, uint8_t BoardY);
 	Piece(const sf::Texture& Texture, EPieceColor Color, class Board& nBoard ,uint8_t BoardX, uint8_t BoardY);
 
 	EPieceColor GetColor() const { return m_Color; }
+	const class Board& GetBoard() const { return m_Board; }
 
 	virtual bool Move(uint8_t NewX, uint8_t NewY) = 0;
 	void Render(sf::RenderTarget& RenderTarget);
@@ -43,8 +45,6 @@ protected:
 	/*
 	* Coordinates from the top left corner viewed from white's perspective
 	*/
-	uint8_t m_BoardX = 0;
-	uint8_t m_BoardY = 0;
 	class Board& m_Board;
 
 	bool bReadyToMove = false;

@@ -9,8 +9,7 @@ Piece::Piece(const sf::Sprite& Sprite, EPieceColor Color, Board& nBoard, uint8_t
 	m_Sprite(Sprite),
 	m_Color(Color),
 	m_Board(nBoard),
-	m_BoardX(BoardX),
-	m_BoardY(BoardY)
+	GameObject(BoardX, BoardY)
 {
 }
 
@@ -19,8 +18,7 @@ Piece::Piece(const sf::Texture& Texture, EPieceColor Color, Board& nBoard, uint8
 	m_Sprite(Texture),
 	m_Color(Color),
 	m_Board(nBoard),
-	m_BoardX(BoardX),
-	m_BoardY(BoardY)
+	GameObject(BoardX, BoardY)
 {
 	
 }
