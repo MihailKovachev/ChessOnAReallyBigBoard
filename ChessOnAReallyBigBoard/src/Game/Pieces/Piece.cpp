@@ -7,20 +7,29 @@
 Piece::Piece(const sf::Sprite& Sprite, EPieceColor Color, Board& nBoard, uint8_t BoardX, uint8_t BoardY)
 	: 
 	m_Sprite(Sprite),
-	m_Color(Color),
 	m_Board(nBoard),
 	GameObject(BoardX, BoardY)
 {
+	m_Color = Color;
 }
 
 Piece::Piece(const sf::Texture& Texture, EPieceColor Color, Board& nBoard, uint8_t BoardX, uint8_t BoardY)
 	: 
 	m_Sprite(Texture),
-	m_Color(Color),
 	m_Board(nBoard),
 	GameObject(BoardX, BoardY)
 {
-	
+	m_Color = Color;
+}
+
+bool Piece::Move(uint8_t NewX, uint8_t NewY)
+{
+	for (const auto& Comp : m_Components)
+	{
+		if (Comp->Execute(NewX, NewY))
+			return true;
+	}
+	return false;
 }
 
 void Piece::Render(sf::RenderTarget& RenderTarget)

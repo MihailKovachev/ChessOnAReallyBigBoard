@@ -17,6 +17,7 @@
 #include "Pieces/Champion.h"
 #include "Pieces/Chancellor.h"
 #include "Pieces/Rose.h"
+#include "Components/RookMovementComponent.h"
 
 const sf::Color Board::DarkSquareColor = { 84, 48, 7 };
 const sf::Color Board::LightSquareColor = { 219, 210, 180 };
@@ -112,7 +113,7 @@ bool Board::HasPieceAt(uint8_t X, uint8_t Y) const
 	return m_BoardSquares[Y * Width + X].bHasPiece;
 }
 
-const std::unique_ptr<Piece>& Board::GetPiece(uint8_t X, uint8_t Y) const
+const std::shared_ptr<Piece>& Board::GetPiece(uint8_t X, uint8_t Y) const
 {
 	return m_BoardSquares[Y * Width + X].m_Piece;
 }
@@ -170,112 +171,118 @@ void Board::SetupBoard()
 	for (int x = 0; x < Width; ++x)
 	{
 		m_BoardSquares[1 * Width + x] = Square { true, 
-			std::make_unique<Pawn>(m_Engine.GetTextureManager().GetPawnTexture(EPieceColor::Black), EPieceColor::Black, *this, x, 1) };
+			std::make_shared<Pawn>(m_Engine.GetTextureManager().GetPawnTexture(EPieceColor::Black), EPieceColor::Black, *this, x, 1) };
 		m_BoardSquares[(Height - 2) * Width + x] = Square{ true,
-			std::make_unique<Pawn>(m_Engine.GetTextureManager().GetPawnTexture(EPieceColor::White), EPieceColor::White, *this, x, (Height - 2)) };
+			std::make_shared<Pawn>(m_Engine.GetTextureManager().GetPawnTexture(EPieceColor::White), EPieceColor::White, *this, x, (Height - 2)) };
 	}
 
 	// Kings
 	m_BoardSquares[0 * Width + 8] = Square{ true,
-		std::make_unique<King>(m_Engine.GetTextureManager().GetKingTexture(EPieceColor::Black), EPieceColor::Black, *this, 8, BlackPieceRow) };
+		std::make_shared<King>(m_Engine.GetTextureManager().GetKingTexture(EPieceColor::Black), EPieceColor::Black, *this, 8, BlackPieceRow) };
 	m_BoardSquares[(Height - 1) * Width + 8] = Square{ true,
-		std::make_unique<King>(m_Engine.GetTextureManager().GetKingTexture(EPieceColor::White), EPieceColor::White, *this, 8, WhitePieceRow) };
+		std::make_shared<King>(m_Engine.GetTextureManager().GetKingTexture(EPieceColor::White), EPieceColor::White, *this, 8, WhitePieceRow) };
 
 	// Queens
 	m_BoardSquares[BlackPieceRow * Width + 7] = Square{ true,
-		std::make_unique<Queen>(m_Engine.GetTextureManager().GetQueenTexture(EPieceColor::Black), EPieceColor::Black, *this, 7, BlackPieceRow) };
+		std::make_shared<Queen>(m_Engine.GetTextureManager().GetQueenTexture(EPieceColor::Black), EPieceColor::Black, *this, 7, BlackPieceRow) };
 	m_BoardSquares[WhitePieceRow * Width + 7] = Square{ true,
-		std::make_unique<Queen>(m_Engine.GetTextureManager().GetQueenTexture(EPieceColor::White), EPieceColor::White, *this, 7, WhitePieceRow) };
+		std::make_shared<Queen>(m_Engine.GetTextureManager().GetQueenTexture(EPieceColor::White), EPieceColor::White, *this, 7, WhitePieceRow) };
 
 	// Rooks
 	// Black Rooks
 	m_BoardSquares[BlackPieceRow * Width + 0] = Square{ true,
-		std::make_unique<Rook>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::Black), EPieceColor::Black, *this, 0, BlackPieceRow) };
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::Black), EPieceColor::Black, *this, 0, BlackPieceRow) };
+	m_BoardSquares[BlackPieceRow * Width + 0].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(ComponentType::CT_RookMovementComponent, m_BoardSquares[BlackPieceRow * Width + 0].m_Piece));
 	m_BoardSquares[BlackPieceRow * Width + 15] = Square{ true,														 
-		std::make_unique<Rook>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::Black), EPieceColor::Black, *this, 15, BlackPieceRow) };
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::Black), EPieceColor::Black, *this, 15, BlackPieceRow) };
+	m_BoardSquares[BlackPieceRow * Width + 15].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(ComponentType::CT_RookMovementComponent, m_BoardSquares[BlackPieceRow * Width + 15].m_Piece));
+
 	// White Rooks																									 
 	m_BoardSquares[WhitePieceRow * Width + 0] = Square{ true,														
-		std::make_unique<Rook>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::White), EPieceColor::White, *this, 0, WhitePieceRow) };
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::White), EPieceColor::White, *this, 0, WhitePieceRow) };
+	m_BoardSquares[WhitePieceRow * Width + 0].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(ComponentType::CT_RookMovementComponent, m_BoardSquares[WhitePieceRow * Width + 0].m_Piece));
+
 	m_BoardSquares[WhitePieceRow * Width + 15] = Square{ true,													
-		std::make_unique<Rook>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::White), EPieceColor::White, *this, 15, WhitePieceRow) };
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::White), EPieceColor::White, *this, 15, WhitePieceRow) };
+	m_BoardSquares[WhitePieceRow * Width + 15].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(ComponentType::CT_RookMovementComponent, m_BoardSquares[WhitePieceRow * Width + 15].m_Piece));
 
 	// Knights
 	// Black Knights
 	m_BoardSquares[BlackPieceRow * Width + 1] = Square{ true,
-		std::make_unique<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::Black), EPieceColor::Black, *this, 1, BlackPieceRow) };
+		std::make_shared<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::Black), EPieceColor::Black, *this, 1, BlackPieceRow) };
 	m_BoardSquares[BlackPieceRow * Width + 14] = Square{ true,
-		std::make_unique<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::Black), EPieceColor::Black, *this, 14, BlackPieceRow) };
+		std::make_shared<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::Black), EPieceColor::Black, *this, 14, BlackPieceRow) };
 	// White Knight
 	m_BoardSquares[WhitePieceRow * Width + 1] = Square{ true,
-		std::make_unique<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::White), EPieceColor::White, *this, 1, WhitePieceRow) };
+		std::make_shared<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::White), EPieceColor::White, *this, 1, WhitePieceRow) };
 	m_BoardSquares[WhitePieceRow * Width + 14] = Square{ true,
-		std::make_unique<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::White), EPieceColor::White, *this, 14, WhitePieceRow) };
+		std::make_shared<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::White), EPieceColor::White, *this, 14, WhitePieceRow) };
 
 	// Wizards
 	// Black Wizards
 	m_BoardSquares[BlackPieceRow * Width + 2] = Square{ true,
-		std::make_unique<Wizard>(m_Engine.GetTextureManager().GetWizardTexture(EPieceColor::Black), EPieceColor::Black, *this, 2, BlackPieceRow) };
+		std::make_shared<Wizard>(m_Engine.GetTextureManager().GetWizardTexture(EPieceColor::Black), EPieceColor::Black, *this, 2, BlackPieceRow) };
 	m_BoardSquares[BlackPieceRow * Width + 13] = Square{ true,
-		std::make_unique<Wizard>(m_Engine.GetTextureManager().GetWizardTexture(EPieceColor::Black), EPieceColor::Black, *this, 13, BlackPieceRow) };
+		std::make_shared<Wizard>(m_Engine.GetTextureManager().GetWizardTexture(EPieceColor::Black), EPieceColor::Black, *this, 13, BlackPieceRow) };
 	// White Wizards
 	m_BoardSquares[WhitePieceRow * Width + 2] = Square{ true,
-		std::make_unique<Wizard>(m_Engine.GetTextureManager().GetWizardTexture(EPieceColor::White), EPieceColor::White, *this, 2, WhitePieceRow) };
+		std::make_shared<Wizard>(m_Engine.GetTextureManager().GetWizardTexture(EPieceColor::White), EPieceColor::White, *this, 2, WhitePieceRow) };
 	m_BoardSquares[WhitePieceRow * Width + 13] = Square{ true,
-		std::make_unique<Wizard>(m_Engine.GetTextureManager().GetWizardTexture(EPieceColor::White), EPieceColor::White, *this, 13, WhitePieceRow) };
+		std::make_shared<Wizard>(m_Engine.GetTextureManager().GetWizardTexture(EPieceColor::White), EPieceColor::White, *this, 13, WhitePieceRow) };
 
 	// Champions
 	// Black Champions
 	m_BoardSquares[BlackPieceRow * Width + 3] = Square{ true,
-		std::make_unique<Champion>(m_Engine.GetTextureManager().GetChampionTexture(EPieceColor::Black), EPieceColor::Black, *this, 3, BlackPieceRow) };
+		std::make_shared<Champion>(m_Engine.GetTextureManager().GetChampionTexture(EPieceColor::Black), EPieceColor::Black, *this, 3, BlackPieceRow) };
 	m_BoardSquares[BlackPieceRow * Width + 12] = Square{ true,
-		std::make_unique<Champion>(m_Engine.GetTextureManager().GetChampionTexture(EPieceColor::Black), EPieceColor::Black, *this, 12, BlackPieceRow) };
+		std::make_shared<Champion>(m_Engine.GetTextureManager().GetChampionTexture(EPieceColor::Black), EPieceColor::Black, *this, 12, BlackPieceRow) };
 	// White Wizards
 	m_BoardSquares[WhitePieceRow * Width + 3] = Square{ true,
-		std::make_unique<Champion>(m_Engine.GetTextureManager().GetChampionTexture(EPieceColor::White), EPieceColor::White, *this, 3, WhitePieceRow) };
+		std::make_shared<Champion>(m_Engine.GetTextureManager().GetChampionTexture(EPieceColor::White), EPieceColor::White, *this, 3, WhitePieceRow) };
 	m_BoardSquares[WhitePieceRow * Width + 12] = Square{ true,
-		std::make_unique<Champion>(m_Engine.GetTextureManager().GetChampionTexture(EPieceColor::White), EPieceColor::White, *this, 12, WhitePieceRow) };
+		std::make_shared<Champion>(m_Engine.GetTextureManager().GetChampionTexture(EPieceColor::White), EPieceColor::White, *this, 12, WhitePieceRow) };
 
 	// Bishops
 	// Black Bishops
 	m_BoardSquares[BlackPieceRow * Width + 4] = Square{ true,
-		std::make_unique<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 4, BlackPieceRow) };
+		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 4, BlackPieceRow) };
 	m_BoardSquares[BlackPieceRow * Width + 11] = Square{ true,
-		std::make_unique<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 11, BlackPieceRow) };
+		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 11, BlackPieceRow) };
 	// White Bishops
 	m_BoardSquares[WhitePieceRow * Width + 4] = Square{ true,
-		std::make_unique<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 4, WhitePieceRow) };
+		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 4, WhitePieceRow) };
 	m_BoardSquares[WhitePieceRow * Width + 11] = Square{ true,
-		std::make_unique<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 11, WhitePieceRow) };
+		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 11, WhitePieceRow) };
 
 	// Roses
 	// Black Rose
 	m_BoardSquares[BlackPieceRow * Width + 5] = Square{ true,
-		std::make_unique<Rose>(m_Engine.GetTextureManager().GetRoseTexture(EPieceColor::Black), EPieceColor::Black, *this, 5, BlackPieceRow) };
+		std::make_shared<Rose>(m_Engine.GetTextureManager().GetRoseTexture(EPieceColor::Black), EPieceColor::Black, *this, 5, BlackPieceRow) };
 	// White Rose
 	m_BoardSquares[WhitePieceRow * Width + 5] = Square{ true,
-		std::make_unique<Rose>(m_Engine.GetTextureManager().GetRoseTexture(EPieceColor::White), EPieceColor::White, *this, 5, WhitePieceRow) };
+		std::make_shared<Rose>(m_Engine.GetTextureManager().GetRoseTexture(EPieceColor::White), EPieceColor::White, *this, 5, WhitePieceRow) };
 
 	// Archbishops
 	// Black Archbishop
 	m_BoardSquares[BlackPieceRow * Width + 6] = Square{ true,
-		std::make_unique<Archbishop>(m_Engine.GetTextureManager().GetArchbishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 6, BlackPieceRow) };
+		std::make_shared<Archbishop>(m_Engine.GetTextureManager().GetArchbishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 6, BlackPieceRow) };
 	// White Archbishop
 	m_BoardSquares[WhitePieceRow * Width + 6] = Square{ true,
-		std::make_unique<Archbishop>(m_Engine.GetTextureManager().GetArchbishopTexture(EPieceColor::White), EPieceColor::White, *this, 6, WhitePieceRow) };
+		std::make_shared<Archbishop>(m_Engine.GetTextureManager().GetArchbishopTexture(EPieceColor::White), EPieceColor::White, *this, 6, WhitePieceRow) };
 
 	// Chancellors
 	// Black Chancellor
 	m_BoardSquares[BlackPieceRow * Width + 9] = Square{ true,
-		std::make_unique<Chancellor>(m_Engine.GetTextureManager().GetChancellorTexture(EPieceColor::Black), EPieceColor::Black, *this, 9, BlackPieceRow) };
+		std::make_shared<Chancellor>(m_Engine.GetTextureManager().GetChancellorTexture(EPieceColor::Black), EPieceColor::Black, *this, 9, BlackPieceRow) };
 	// White Chancellor
 	m_BoardSquares[WhitePieceRow * Width + 9] = Square{ true,
-		std::make_unique<Chancellor>(m_Engine.GetTextureManager().GetChancellorTexture(EPieceColor::White), EPieceColor::White, *this, 9, WhitePieceRow) };
+		std::make_shared<Chancellor>(m_Engine.GetTextureManager().GetChancellorTexture(EPieceColor::White), EPieceColor::White, *this, 9, WhitePieceRow) };
 
 	// Fools
 	// Black Fool
 	m_BoardSquares[BlackPieceRow * Width + 10] = Square{ true,
-		std::make_unique<Fool>(m_Engine.GetTextureManager().GetFoolTexture(EPieceColor::Black), EPieceColor::Black, *this, 10, BlackPieceRow) };
+		std::make_shared<Fool>(m_Engine.GetTextureManager().GetFoolTexture(EPieceColor::Black), EPieceColor::Black, *this, 10, BlackPieceRow) };
 	// White Fool
 	m_BoardSquares[WhitePieceRow * Width + 10] = Square{ true,
-		std::make_unique<Fool>(m_Engine.GetTextureManager().GetFoolTexture(EPieceColor::White), EPieceColor::White, *this, 10, WhitePieceRow) };
+		std::make_shared<Fool>(m_Engine.GetTextureManager().GetFoolTexture(EPieceColor::White), EPieceColor::White, *this, 10, WhitePieceRow) };
 }

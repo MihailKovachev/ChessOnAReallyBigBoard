@@ -33,7 +33,7 @@ bool Rook::Move(uint8_t NewX, uint8_t  NewY)
 	{
 		uint8_t DistanceToNewY = (uint8_t)std::abs(m_BoardY - NewY);
 
-		// We need to perserve direction information, which is why we need the sign of the value, too.
+		// We need to preserve direction information, which is why we need the sign of the value, too.
 		int8_t DistanceToFirstObstructedSquare = ObstructedSquares[0].y - m_BoardY;
 		int8_t DistanceToSecondObstructedSquare = ObstructedSquares[1].y - m_BoardY;
 
@@ -86,7 +86,7 @@ bool Rook::Move(uint8_t NewX, uint8_t  NewY)
 	{
 		uint8_t DistanceToNewX = (uint8_t)std::abs(m_BoardX - NewX);
 
-		// We need to perserve direction information, which is whx we need the sign of the value, too.
+		// We need to preserve direction information, which is whx we need the sign of the value, too.
 		int8_t DistanceToFirstObstructedSquare = ObstructedSquares[0].x - m_BoardX;
 		int8_t DistanceToSecondObstructedSquare = ObstructedSquares[1].x - m_BoardX;
 
@@ -106,7 +106,6 @@ bool Rook::Move(uint8_t NewX, uint8_t  NewY)
 			}
 			else
 			{ 
-				SetReadyToMove(false);
 				return false;
 			}
 		}
@@ -116,25 +115,21 @@ bool Rook::Move(uint8_t NewX, uint8_t  NewY)
 				|| (DistanceToNewX < std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor == m_Color))
 			{
 				m_BoardX = NewX;
-				SetReadyToMove(false);
 				return true;
 			}
 			else
 			{
-				SetReadyToMove(false);
 				return false;
 			}
 		}
 		else
 		{
-			SetReadyToMove(false);
 			return false;
 		}
 	}
 
 	m_BoardX = NewX;
 	m_BoardY = NewY;
-	SetReadyToMove(false);
 	return true;
 }
 

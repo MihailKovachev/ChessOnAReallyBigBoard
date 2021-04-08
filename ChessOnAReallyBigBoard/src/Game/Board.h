@@ -9,9 +9,10 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
+#include <Core/Singleton/Singleton.h>
 #include "Pieces/Piece.h"
 
-class Board
+class Board : public Singleton<Board>
 {
 public:
 	Board(const sf::Vector2u& Size, const class Engine& NEngine);
@@ -26,7 +27,7 @@ public:
 	float GetSquareSize() const { return SquareSize; }
 
 	bool HasPieceAt(uint8_t X, uint8_t Y) const;
-	const std::unique_ptr<Piece>& GetPiece(uint8_t X, uint8_t Y) const;
+	const std::shared_ptr<Piece>& GetPiece(uint8_t X, uint8_t Y) const;
 	bool GetPieceColor(uint8_t X, uint8_t Y, EPieceColor& OutColor) const;
 	static bool IsWithinBoard(int8_t X, int8_t Y);
 private:
@@ -37,7 +38,7 @@ private:
 	struct Square
 	{
 		bool bHasPiece = false;
-		std::unique_ptr<Piece> m_Piece = nullptr;
+		std::shared_ptr<Piece> m_Piece = nullptr;
 
 		bool bHighlighted = false;
 	};

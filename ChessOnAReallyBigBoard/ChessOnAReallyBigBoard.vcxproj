@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="src\Core\Engine\Components\Component.cpp" />
     <ClCompile Include="src\Core\Engine\GameObject.cpp" />
+    <ClCompile Include="src\Game\Components\RookMovementComponent.cpp" />
     <ClCompile Include="src\Game\Pieces\Archbishop.cpp" />
     <ClCompile Include="src\Game\Pieces\Bishop.cpp" />
     <ClCompile Include="src\Game\Pieces\Champion.cpp" />
@@ -189,10 +190,12 @@
     <ClInclude Include="src\Core\Engine\Components\Component.h" />
     <ClInclude Include="src\Core\Engine\Components\ComponentTypes.h" />
     <ClInclude Include="src\Core\Engine\GameObject.h" />
+    <ClInclude Include="src\Game\Components\RookMovementComponent.h" />
     <ClInclude Include="src\Game\Pieces\Archbishop.h" />
     <ClInclude Include="src\Game\Pieces\Bishop.h" />
     <ClInclude Include="src\Game\Pieces\Champion.h" />
     <ClInclude Include="src\Game\Pieces\Chancellor.h" />
+    <ClInclude Include="src\Game\Pieces\Color.h" />
     <ClInclude Include="src\Game\Pieces\Fool.h" />
     <ClInclude Include="src\Game\Pieces\King.h" />
     <ClInclude Include="src\Game\Pieces\Knight.h" />

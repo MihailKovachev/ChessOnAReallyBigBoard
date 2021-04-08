@@ -5,22 +5,15 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <Core/Engine/GameObject.h>
 
-enum class EPieceColor
-{
-	Black,
-	White
-};
-
 class Piece : public GameObject
 {
 public:
 	Piece(const sf::Sprite& Sprite, EPieceColor Color, class Board& nBoard, uint8_t BoardX, uint8_t BoardY);
 	Piece(const sf::Texture& Texture, EPieceColor Color, class Board& nBoard ,uint8_t BoardX, uint8_t BoardY);
 
-	EPieceColor GetColor() const { return m_Color; }
 	const class Board& GetBoard() const { return m_Board; }
 
-	virtual bool Move(uint8_t NewX, uint8_t NewY) = 0;
+	virtual bool Move(uint8_t NewX, uint8_t NewY);
 	void Render(sf::RenderTarget& RenderTarget);
 	void ScaleSprite(const float Scale);
 
@@ -41,7 +34,6 @@ protected:
 	virtual bool IsBlockedOnRow(std::array<sf::Vector2u, 2>& BlockingSquares);
 protected:
 	sf::Sprite m_Sprite;
-	EPieceColor m_Color = EPieceColor::White;
 	/*
 	* Coordinates from the top left corner viewed from white's perspective
 	*/
