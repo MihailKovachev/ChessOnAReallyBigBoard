@@ -14,7 +14,7 @@ void GameObject::AddComponent(const std::shared_ptr<Component>& Comp)
 
 void GameObject::RemoveComponent(uint32_t ID)
 {
-	for (int i = 0; i < m_Components.size(); ++i)
+	for (uint32_t i = 0; i < m_Components.size(); ++i)
 	{
 		if (m_Components[i]->GetID() == ID)
 		{
@@ -23,7 +23,7 @@ void GameObject::RemoveComponent(uint32_t ID)
 	}
 }
 
-std::shared_ptr<Component> GameObject::GetFirstComponentOfType(ComponentType Type)
+std::shared_ptr<Component> GameObject::GetFirstComponentOfType(EComponentType Type)
 {
 	for (const auto& Comp : m_Components)
 	{

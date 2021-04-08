@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ComponentType
+enum class EComponentType
 {
 	CT_ArchbishopMovementComponent,
 	CT_BishopMovementComponent,

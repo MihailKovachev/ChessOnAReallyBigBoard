@@ -3,7 +3,7 @@
 #include <Core/Engine/Engine.h>
 #include <Game/Board.h>
 
-BishopMovementComponent::BishopMovementComponent(ComponentType Type, const std::shared_ptr<class GameObject>& Owner)
+BishopMovementComponent::BishopMovementComponent(EComponentType Type, const std::shared_ptr<class GameObject>& Owner)
     : Component(Type, Owner)
 {
 }
@@ -34,8 +34,7 @@ bool BishopMovementComponent::Execute(uint8_t NewX, uint8_t NewY)
 		if (DistanceToNewSquare < DistanceToBlockingSquare
 			|| (DistanceToNewSquare == DistanceToBlockingSquare && BlockingPieceColor != OwnerColor))
 		{
-			StartX = NewX;
-			StartY = NewY;
+			m_Owner->SetPosition(NewX, NewY);
 			return true;
 		}
 		else
@@ -45,8 +44,7 @@ bool BishopMovementComponent::Execute(uint8_t NewX, uint8_t NewY)
 	}
 	else
 	{
-		StartX = NewX;
-		StartY = NewY;
+		m_Owner->SetPosition(NewX, NewY);
 		return true;
 	}
 

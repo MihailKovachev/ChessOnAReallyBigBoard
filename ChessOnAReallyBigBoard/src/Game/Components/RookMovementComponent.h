@@ -8,7 +8,7 @@
 class RookMovementComponent : public Component
 {
 public:
-	RookMovementComponent(ComponentType Type, const std::shared_ptr<class GameObject>& Owner);
+	RookMovementComponent(EComponentType Type, const std::shared_ptr<class GameObject>& Owner);
 	virtual bool Execute(uint8_t NewX, uint8_t NewY) override;
 
 private:

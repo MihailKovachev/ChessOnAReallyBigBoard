@@ -7,7 +7,7 @@
 class BishopMovementComponent : public Component
 {
 public:
-	BishopMovementComponent(ComponentType Type, const std::shared_ptr<class GameObject>& Owner);
+	BishopMovementComponent(EComponentType Type, const std::shared_ptr<class GameObject>& Owner);
 	virtual bool Execute(uint8_t NewX, uint8_t  NewY) override;
 
 private:

@@ -2,7 +2,7 @@
 
 uint32_t Component::s_ComponentCount = 0;
 
-Component::Component(ComponentType Type, const std::shared_ptr<class GameObject>& Owner)
+Component::Component(EComponentType Type, const std::shared_ptr<class GameObject>& Owner)
 	: m_Type(Type), 
 	m_Owner(Owner)
 {

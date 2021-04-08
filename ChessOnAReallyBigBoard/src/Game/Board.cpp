@@ -7,8 +7,6 @@
 #include "Core/Engine/TextureManager.h"
 #include "Pieces/Pawn.h"
 #include "Pieces/Archbishop.h"
-#include "Pieces/Bishop.h"
-#include "Pieces/Knight.h"
 #include "Pieces/King.h"
 #include "Pieces/Queen.h"
 #include "Pieces/Wizard.h"
@@ -18,6 +16,7 @@
 #include "Pieces/Rose.h"
 #include "Components/RookMovementComponent.h"
 #include "Components/BishopMovementComponent.h"
+#include "Components/KnightMovementComponent.h"
 
 const sf::Color Board::DarkSquareColor = { 84, 48, 7 };
 const sf::Color Board::LightSquareColor = { 219, 210, 180 };
@@ -192,31 +191,35 @@ void Board::SetupBoard()
 	// Black Rooks
 	m_BoardSquares[BlackPieceRow * Width + 0] = Square{ true,
 		std::make_shared<Piece>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::Black), EPieceColor::Black, *this, 0, BlackPieceRow) };
-	m_BoardSquares[BlackPieceRow * Width + 0].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(ComponentType::CT_RookMovementComponent, m_BoardSquares[BlackPieceRow * Width + 0].m_Piece));
+	m_BoardSquares[BlackPieceRow * Width + 0].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(EComponentType::CT_RookMovementComponent, m_BoardSquares[BlackPieceRow * Width + 0].m_Piece));
 	m_BoardSquares[BlackPieceRow * Width + 15] = Square{ true,														 
 		std::make_shared<Piece>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::Black), EPieceColor::Black, *this, 15, BlackPieceRow) };
-	m_BoardSquares[BlackPieceRow * Width + 15].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(ComponentType::CT_RookMovementComponent, m_BoardSquares[BlackPieceRow * Width + 15].m_Piece));
+	m_BoardSquares[BlackPieceRow * Width + 15].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(EComponentType::CT_RookMovementComponent, m_BoardSquares[BlackPieceRow * Width + 15].m_Piece));
 
 	// White Rooks																									 
 	m_BoardSquares[WhitePieceRow * Width + 0] = Square{ true,														
 		std::make_shared<Piece>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::White), EPieceColor::White, *this, 0, WhitePieceRow) };
-	m_BoardSquares[WhitePieceRow * Width + 0].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(ComponentType::CT_RookMovementComponent, m_BoardSquares[WhitePieceRow * Width + 0].m_Piece));
+	m_BoardSquares[WhitePieceRow * Width + 0].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(EComponentType::CT_RookMovementComponent, m_BoardSquares[WhitePieceRow * Width + 0].m_Piece));
 
 	m_BoardSquares[WhitePieceRow * Width + 15] = Square{ true,													
 		std::make_shared<Piece>(m_Engine.GetTextureManager().GetRookTexture(EPieceColor::White), EPieceColor::White, *this, 15, WhitePieceRow) };
-	m_BoardSquares[WhitePieceRow * Width + 15].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(ComponentType::CT_RookMovementComponent, m_BoardSquares[WhitePieceRow * Width + 15].m_Piece));
+	m_BoardSquares[WhitePieceRow * Width + 15].m_Piece->AddComponent(std::make_shared<RookMovementComponent>(EComponentType::CT_RookMovementComponent, m_BoardSquares[WhitePieceRow * Width + 15].m_Piece));
 
 	// Knights
 	// Black Knights
 	m_BoardSquares[BlackPieceRow * Width + 1] = Square{ true,
-		std::make_shared<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::Black), EPieceColor::Black, *this, 1, BlackPieceRow) };
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::Black), EPieceColor::Black, *this, 1, BlackPieceRow) };
+	m_BoardSquares[BlackPieceRow * Width + 1].m_Piece->AddComponent(std::make_shared<KnightMovementComponent>(EComponentType::CT_KnightMovementComponent, m_BoardSquares[BlackPieceRow * Width + 1].m_Piece));
 	m_BoardSquares[BlackPieceRow * Width + 14] = Square{ true,
-		std::make_shared<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::Black), EPieceColor::Black, *this, 14, BlackPieceRow) };
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::Black), EPieceColor::Black, *this, 14, BlackPieceRow) };
+	m_BoardSquares[BlackPieceRow * Width + 14].m_Piece->AddComponent(std::make_shared<KnightMovementComponent>(EComponentType::CT_KnightMovementComponent, m_BoardSquares[BlackPieceRow * Width + 14].m_Piece));
 	// White Knight
 	m_BoardSquares[WhitePieceRow * Width + 1] = Square{ true,
-		std::make_shared<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::White), EPieceColor::White, *this, 1, WhitePieceRow) };
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::White), EPieceColor::White, *this, 1, WhitePieceRow) };
+	m_BoardSquares[WhitePieceRow * Width + 1].m_Piece->AddComponent(std::make_shared<KnightMovementComponent>(EComponentType::CT_KnightMovementComponent, m_BoardSquares[WhitePieceRow * Width + 1].m_Piece));
 	m_BoardSquares[WhitePieceRow * Width + 14] = Square{ true,
-		std::make_shared<Knight>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::White), EPieceColor::White, *this, 14, WhitePieceRow) };
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetKnightTexture(EPieceColor::White), EPieceColor::White, *this, 14, WhitePieceRow) };
+	m_BoardSquares[WhitePieceRow * Width + 14].m_Piece->AddComponent(std::make_shared<KnightMovementComponent>(EComponentType::CT_KnightMovementComponent, m_BoardSquares[WhitePieceRow * Width + 14].m_Piece));
 
 	// Wizards
 	// Black Wizards
@@ -245,18 +248,18 @@ void Board::SetupBoard()
 	// Bishops
 	// Black Bishops
 	m_BoardSquares[BlackPieceRow * Width + 4] = Square{ true,
-		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 4, BlackPieceRow) };
-	m_BoardSquares[BlackPieceRow * Width + 4].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(ComponentType::CT_BishopMovementComponent, m_BoardSquares[BlackPieceRow * Width + 4].m_Piece));
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 4, BlackPieceRow) };
+	m_BoardSquares[BlackPieceRow * Width + 4].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(EComponentType::CT_BishopMovementComponent, m_BoardSquares[BlackPieceRow * Width + 4].m_Piece));
 	m_BoardSquares[BlackPieceRow * Width + 11] = Square{ true,
-		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 11, BlackPieceRow) };
-	m_BoardSquares[BlackPieceRow * Width + 11].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(ComponentType::CT_BishopMovementComponent, m_BoardSquares[BlackPieceRow * Width + 11].m_Piece));
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 11, BlackPieceRow) };
+	m_BoardSquares[BlackPieceRow * Width + 11].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(EComponentType::CT_BishopMovementComponent, m_BoardSquares[BlackPieceRow * Width + 11].m_Piece));
 	// White Bishops
 	m_BoardSquares[WhitePieceRow * Width + 4] = Square{ true,
-		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 4, WhitePieceRow) };
-	m_BoardSquares[WhitePieceRow * Width + 4].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(ComponentType::CT_BishopMovementComponent, m_BoardSquares[WhitePieceRow * Width + 4].m_Piece));
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 4, WhitePieceRow) };
+	m_BoardSquares[WhitePieceRow * Width + 4].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(EComponentType::CT_BishopMovementComponent, m_BoardSquares[WhitePieceRow * Width + 4].m_Piece));
 	m_BoardSquares[WhitePieceRow * Width + 11] = Square{ true,
-		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 11, WhitePieceRow) };
-	m_BoardSquares[WhitePieceRow * Width + 11].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(ComponentType::CT_BishopMovementComponent, m_BoardSquares[WhitePieceRow * Width + 11].m_Piece));
+		std::make_shared<Piece>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 11, WhitePieceRow) };
+	m_BoardSquares[WhitePieceRow * Width + 11].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(EComponentType::CT_BishopMovementComponent, m_BoardSquares[WhitePieceRow * Width + 11].m_Piece));
 
 	// Roses
 	// Black Rose

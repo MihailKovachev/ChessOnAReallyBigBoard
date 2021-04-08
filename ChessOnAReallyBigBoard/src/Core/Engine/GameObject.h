@@ -22,7 +22,7 @@ public:
 
 	virtual void AddComponent(const std::shared_ptr<Component>& Comp);
 	virtual void RemoveComponent(uint32_t ID);
-	virtual std::shared_ptr<Component> GetFirstComponentOfType(ComponentType Type);
+	virtual std::shared_ptr<Component> GetFirstComponentOfType(EComponentType Type);
 protected:
 	uint8_t m_BoardX = 0;
 	uint8_t m_BoardY = 0;

@@ -122,7 +122,7 @@ bool RookMovementComponent::Execute(uint8_t NewX, uint8_t NewY)
 	return true;
 }
 
-RookMovementComponent::RookMovementComponent(ComponentType Type, const std::shared_ptr<class GameObject>& Owner)
+RookMovementComponent::RookMovementComponent(EComponentType Type, const std::shared_ptr<class GameObject>& Owner)
 	: Component(Type, Owner)
 {
 }
