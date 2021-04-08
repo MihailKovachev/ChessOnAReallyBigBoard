@@ -16,11 +16,11 @@ bool RookMovementComponent::Execute(uint8_t NewX, uint8_t NewY)
 	int8_t DirectionX = Engine::SignOf(NewX - StartX);
 	int8_t DirectionY = Engine::SignOf(NewY - StartY);
 
-	EPieceColor PieceColor = m_Owner->GetColor();
+	EPieceColor OwnerColor = m_Owner->GetColor();
 
 	EPieceColor CapturedPieceColor;
 	// Ensure we don't capture a piece of the same color
-	if (Board::GetInstance().GetPieceColor(NewX, NewY, CapturedPieceColor) && CapturedPieceColor == PieceColor)
+	if (Board::GetInstance().GetPieceColor(NewX, NewY, CapturedPieceColor) && CapturedPieceColor == OwnerColor)
 		return false;
 
 	std::array<sf::Vector2u, 2> ObstructedSquares;
@@ -41,8 +41,8 @@ bool RookMovementComponent::Execute(uint8_t NewX, uint8_t NewY)
 
 		if (DirectionY == Engine::SignOf(DistanceToFirstObstructedSquare))
 		{
-			if ((DistanceToNewY <= std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor != PieceColor)
-				|| (DistanceToNewY < std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor == PieceColor))
+			if ((DistanceToNewY <= std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor != OwnerColor)
+				|| (DistanceToNewY < std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor == OwnerColor))
 			{
 				m_Owner->SetPosition(StartX, NewY);
 				return true;
@@ -54,8 +54,8 @@ bool RookMovementComponent::Execute(uint8_t NewX, uint8_t NewY)
 		}
 		else if (DirectionY == Engine::SignOf(DistanceToSecondObstructedSquare))
 		{
-			if ((DistanceToNewY <= std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor != PieceColor)
-				|| (DistanceToNewY < std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor == PieceColor))
+			if ((DistanceToNewY <= std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor != OwnerColor)
+				|| (DistanceToNewY < std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor == OwnerColor))
 			{
 				m_Owner->SetPosition(StartX, NewY);
 				return true;
@@ -88,8 +88,8 @@ bool RookMovementComponent::Execute(uint8_t NewX, uint8_t NewY)
 
 		if (DirectionX == Engine::SignOf(DistanceToFirstObstructedSquare))
 		{
-			if ((DistanceToNewX <= std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor != PieceColor)
-				|| (DistanceToNewX < std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor == PieceColor))
+			if ((DistanceToNewX <= std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor != OwnerColor)
+				|| (DistanceToNewX < std::abs(DistanceToFirstObstructedSquare) && FirstObstructingPieceColor == OwnerColor))
 			{
 				m_Owner->SetPosition(NewX, NewY);
 				return true;
@@ -101,8 +101,8 @@ bool RookMovementComponent::Execute(uint8_t NewX, uint8_t NewY)
 		}
 		else if (DirectionX == Engine::SignOf(DistanceToSecondObstructedSquare))
 		{
-			if ((DistanceToNewX <= std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor != PieceColor)
-				|| (DistanceToNewX < std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor == PieceColor))
+			if ((DistanceToNewX <= std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor != OwnerColor)
+				|| (DistanceToNewX < std::abs(DistanceToSecondObstructedSquare) && SecondObstructingPieceColor == OwnerColor))
 			{
 				m_Owner->SetPosition(NewX, NewY);
 				return true;

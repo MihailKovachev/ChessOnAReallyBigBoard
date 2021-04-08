@@ -13,11 +13,11 @@
 #include "Pieces/Queen.h"
 #include "Pieces/Wizard.h"
 #include "Pieces/Fool.h"
-#include "Pieces/Rook.h"
 #include "Pieces/Champion.h"
 #include "Pieces/Chancellor.h"
 #include "Pieces/Rose.h"
 #include "Components/RookMovementComponent.h"
+#include "Components/BishopMovementComponent.h"
 
 const sf::Color Board::DarkSquareColor = { 84, 48, 7 };
 const sf::Color Board::LightSquareColor = { 219, 210, 180 };
@@ -246,13 +246,17 @@ void Board::SetupBoard()
 	// Black Bishops
 	m_BoardSquares[BlackPieceRow * Width + 4] = Square{ true,
 		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 4, BlackPieceRow) };
+	m_BoardSquares[BlackPieceRow * Width + 4].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(ComponentType::CT_BishopMovementComponent, m_BoardSquares[BlackPieceRow * Width + 4].m_Piece));
 	m_BoardSquares[BlackPieceRow * Width + 11] = Square{ true,
 		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::Black), EPieceColor::Black, *this, 11, BlackPieceRow) };
+	m_BoardSquares[BlackPieceRow * Width + 11].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(ComponentType::CT_BishopMovementComponent, m_BoardSquares[BlackPieceRow * Width + 11].m_Piece));
 	// White Bishops
 	m_BoardSquares[WhitePieceRow * Width + 4] = Square{ true,
 		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 4, WhitePieceRow) };
+	m_BoardSquares[WhitePieceRow * Width + 4].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(ComponentType::CT_BishopMovementComponent, m_BoardSquares[WhitePieceRow * Width + 4].m_Piece));
 	m_BoardSquares[WhitePieceRow * Width + 11] = Square{ true,
 		std::make_shared<Bishop>(m_Engine.GetTextureManager().GetBishopTexture(EPieceColor::White), EPieceColor::White, *this, 11, WhitePieceRow) };
+	m_BoardSquares[WhitePieceRow * Width + 11].m_Piece->AddComponent(std::make_shared<BishopMovementComponent>(ComponentType::CT_BishopMovementComponent, m_BoardSquares[WhitePieceRow * Width + 11].m_Piece));
 
 	// Roses
 	// Black Rose
